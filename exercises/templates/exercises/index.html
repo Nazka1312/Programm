@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Exercises{% endblock %}
+
+{% block content %}
+<h2>Список упражнений</h2>
+<ul class="list-group">
+  {% for exercise in exercises %}
+    <li class="list-group-item">
+      <strong>{{ exercise.question_text }}</strong><br>
+      {% if exercise.image %}
+        <img src="{{ exercise.image.url }}" alt="image" width="150">
+      {% endif %}
+      <p><em>{{ exercise.correct_answer }}</em></p>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

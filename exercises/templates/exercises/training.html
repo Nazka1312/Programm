@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>🧠 Упражнение для памяти</h2>
+    <p><strong>Задание:</strong> {{ exercise.question_text }}</p>
+
+    {% if exercise.image %}
+        <img src="{{ exercise.image.url }}" class="img-fluid" alt="Картинка к упражнению">
+    {% endif %}
+
+    <button class="btn btn-info my-3" onclick="speakText('{{ exercise.question_text }}')">🔊 Озвучить задание</button>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="answer" class="form-control mb-3" placeholder="Введите ответ..." required>
+        <button type="submit" class="btn btn-success">Проверить</button>
+    </form>
+
+    {% if result %}
+        <div class="alert alert-info mt-3">{{ result }}</div>
+    {% endif %}
+</div>
+
+<script>
+function speakText(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    speechSynthesis.speak(utterance);
+}
+</script>
+{% endblock %}
